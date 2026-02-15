@@ -13,7 +13,7 @@ app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True
 
 app.include_router(speech_to_speech_router)
 app.include_router(text_to_speech_router)
-app.include_router(text_to_speech_router)
+app.include_router(speech_to_text_router)
 app.include_router(text_to_text_router)
 
 @app.get("/health")
