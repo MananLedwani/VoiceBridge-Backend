@@ -1,3 +1,22 @@
-TEXT_TO_TEXT_MODEL_NAME: str = "facebook/nllb-200-1.3B"
-TEXT_TO_TEXT_HINDI_CODE: str = "hin_Deva"
-TEXT_TO_TEXT_SANSKRIT_CODE: str = "san_Deva"
+TEXT_TO_TEXT_HINDI_CODE: str = "hi"
+SPEECH_TO_TEXT_HINDI_CODE: str = "hi"
+TEXT_TO_SPEECH_HINDI_CODE: str = "hi"
+
+TEXT_TO_TEXT_SANSKRIT_CODE: str = "sa"
+SPEECH_TO_TEXT_SANSKRIT_CODE: str = "sa"
+TEXT_TO_SPEECH_SANSKRIT_CODE: str = "sa"
+
+USER_ID: str = ""
+ULCA_API_KEY: str = ""
+PIPELINE_ID: str = ""
+INFERENCE_API_KEY: str = ""
+
+CONFIG_URL: str = ""
+BHASHINI_INFERENCE_URL: str = ""
+
+
+TTS_SERVICE_ID: str = "" 
+
+WAV_FORMAT: str = "wav"
+
+

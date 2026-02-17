@@ -1,17 +1,17 @@
 from app.constants.constants import *
 import requests
+import base64
 
 
-def get_bhashini_config(source_lang: str, target_lang: str):
+def get_bhashini_asr_config(source_lang: str):
     try:
         payload = {
             "pipelineTasks": [
                 {
-                    "taskType": "translation",
+                    "taskType": "asr",
                     "config": {
                         "language": {
-                            "sourceLanguage": source_lang,
-                            "targetLanguage": target_lang
+                            "sourceLanguage": source_lang
                         }
                     }
                 }
@@ -49,34 +49,37 @@ def get_bhashini_config(source_lang: str, target_lang: str):
         }
 
     except Exception as e:
-        print(f"Error fetching Bhashini Config: {e}")
+        print(f"Error fetching Bhashini ASR Config: {e}")
         raise e
 
 
-def bhashini_translate(text: str, source_lang: str, target_lang: str) -> str:
-    if not text:
+def bhashini_asr(audio_bytes: bytes, source_lang: str, audio_format: str = "flac") -> str:
+    if not audio_bytes:
         return ""
 
     try:
-        config = get_bhashini_config(source_lang, target_lang)
+        config = get_bhashini_asr_config(source_lang)
+
+        audio_b64 = base64.b64encode(audio_bytes).decode('utf-8')
 
         payload = {
             "pipelineTasks": [
                 {
-                    "taskType": "translation",
+                    "taskType": "asr",
                     "config": {
                         "language": {
-                            "sourceLanguage": source_lang,
-                            "targetLanguage": target_lang
+                            "sourceLanguage": source_lang
                         },
-                        "serviceId": config["service_id"]
+                        "serviceId": config["service_id"],
+                        "audioFormat": audio_format,
+                        "samplingRate": 16000
                     }
                 }
             ],
             "inputData": {
-                "input": [
+                "audio": [
                     {
-                        "source": text
+                        "audioContent": audio_b64
                     }
                 ]
             }
@@ -90,10 +93,9 @@ def bhashini_translate(text: str, source_lang: str, target_lang: str) -> str:
         response.raise_for_status()
         result = response.json()
 
-        translated_text = result["pipelineResponse"][0]["output"][0]["target"]
-        return translated_text
+        transcribed_text = result["pipelineResponse"][0]["output"][0]["source"]
+        return transcribed_text
 
     except Exception as e:
-        print(f"Bhashini Translation Failed: {e}")
+        print(f"Bhashini ASR Failed: {e}")
         raise e
-    

@@ -1,4 +1,4 @@
 from pydantic import BaseModel, Field
 
-class TextToTextTranslationRequest(BaseModel):
+class TTSRequest(BaseModel):
     text: str = Field(min_length=1)
