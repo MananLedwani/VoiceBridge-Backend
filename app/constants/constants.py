@@ -19,4 +19,4 @@ TTS_SERVICE_ID: str = ""
 
 WAV_FORMAT: str = "wav"
 
-
+MAX_FILE_SIZE_BYTES: int = 5 * 1024 * 1024
